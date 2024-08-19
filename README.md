@@ -4,6 +4,11 @@ pk8s (programmable kubernetes)
 ## CLI
 
 ### Quickstart
+Install:
+```shell
+go install github.com/alexferl/pk8s@latest
+```
+
 Init:
 ```shell
 pk8s init infra
