@@ -2,6 +2,7 @@
 pk8s (programmable kubernetes)
 
 ## CLI
+The easiest way to get started is using the CLI.
 
 ### Quickstart
 Install:
@@ -53,9 +54,14 @@ metadata:
 ```
 
 ## Code
-If you can't or don't want to use the CLI, you can also directly use the library:
+If you can't or don't want to use the CLI, you can also directly use the library.
 
 ### Quickstart
+Install:
+```shell
+go get github.com/alexferl/pk8s
+```
+
 Create a `main.go` file with the following content:
 
 ```go
