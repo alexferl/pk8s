@@ -1,0 +1,25 @@
+// {{classname}} {{{description}}}{{^description}}struct for {{{classname}}}{{/description}}
+type {{classname}} struct {
+{{#parentModel.name}}
+{{^isArray}}
+	{{{parentModel.classname}}}
+{{/isArray}}
+{{#isArray}}
+	Items {{{parentModel.classname}}}
+{{/isArray}}
+{{/parentModel.name}}
+{{#vars}}
+{{^-first}}
+{{/-first}}
+{{#description}}
+	// {{{.}}}
+{{/description}}
+{{#deprecated}}
+	// Deprecated
+{{/deprecated}}
+	{{name}} {{^required}}{{^isNullable}}{{^isArray}}{{^isFreeFormObject}}*{{/isFreeFormObject}}{{/isArray}}{{/isNullable}}{{/required}}{{{dataType}}} `json:"{{{baseName}}}{{^required}},omitempty{{/required}}"{{#withXml}} xml:"{{{baseName}}}{{#isXmlAttribute}},attr{{/isXmlAttribute}}"{{/withXml}}{{#withValidate}} validate:"{{validate}}"{{/withValidate}}{{#vendorExtensions.x-go-custom-tag}} {{{.}}}{{/vendorExtensions.x-go-custom-tag}}`
+{{/vars}}
+{{#isAdditionalPropertiesTrue}}
+	AdditionalProperties map[string]interface{}
+{{/isAdditionalPropertiesTrue}}
+}
