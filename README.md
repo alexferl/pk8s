@@ -53,6 +53,8 @@ metadata:
   name: hello-24cf642e
 ```
 
+You can now edit `main.go` and add more stacks and charts and repeat the export process to generate new manifests.
+
 ## Code
 If you can't or don't want to use the CLI, you can also directly use the library.
 
