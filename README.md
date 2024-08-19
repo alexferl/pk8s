@@ -76,7 +76,7 @@ Generated Kubernetes manifests:
     - dist/dev/hello.yaml
 ```
 
-And if you check the content of `dist/dev/hello.yaml`: 
+And if you check the content of `dist/dev/hello.yaml`:
 ```
 ---
 apiVersion: apps/v1
