@@ -46,7 +46,7 @@ build:
 	go build -o cli-bin ./cmd/cli
 
 test:
-	go test -v $(shell go list ./... | grep -v '/hack')
+	go test -v $(shell go list ./... | grep -Ev '/hack|/examples')
 
 cover:
 	go test -v -cover $(shell go list ./... | grep -Ev '/hack|/examples')

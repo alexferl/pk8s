@@ -6,7 +6,7 @@ pk8s (programmable kubernetes)
 ### Quickstart
 Install:
 ```shell
-go install github.com/alexferl/pk8s@latest
+go install github.com/alexferl/pk8s/cmd/cli@latest && mv ~/go/bin/cli ~/go/bin/pk8s
 ```
 
 Init:

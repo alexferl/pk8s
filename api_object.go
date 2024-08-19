@@ -1,4 +1,4 @@
-package main
+package pk8s
 
 import (
 	"encoding/json"
