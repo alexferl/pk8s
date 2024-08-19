@@ -7,7 +7,7 @@ It empowers developers to define, manage, and reuse Kubernetes manifests program
 pk8s applications are developed using Go, providing a powerful and flexible framework for managing Kubernetes resources programmatically.
 
 At the core of a pk8s project is the `App`, which serves as the foundational element.
-Within an `App`, users have the flexibility to define multiple `Stack`, representing various environments, clusters, or teams, tailored to their specific needs.
+Within an `App`, users have the flexibility to define multiple `Stack`, representing various environments, clusters, or team.
 Each `Stack` can further encapsulate multiple `Chart`, which are organized collections of Kubernetes resources such as `Deployment`, `Service`, `Ingress`, `ReplicaSet`, and more.
 
 ### Using
