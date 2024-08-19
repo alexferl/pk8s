@@ -49,10 +49,10 @@ test:
 	go test -v $(shell go list ./... | grep -v '/hack')
 
 cover:
-	go test -v -cover $(shell go list ./... | grep -v '/hack')
+	go test -v -cover $(shell go list ./... | grep -Ev '/hack|/examples')
 
 cover-html:
-	go test -v -coverprofile=coverage.out $(shell go list ./... | grep -v '/hack')
+	go test -v -coverprofile=coverage.out $(shell go list ./... | grep -Ev '/hack|/examples')
 	go tool cover -html=coverage.out
 
 tidy:
