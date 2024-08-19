@@ -1,9 +1,10 @@
-package cmd
+package cli
 
 import (
 	"fmt"
-	"github.com/spf13/cobra"
 	"os"
+
+	"github.com/spf13/cobra"
 )
 
 var initMsg = `
@@ -52,6 +53,7 @@ func main() {
 
 	app.Export()
 }
+
 `
 
 func initCmd(executor Executor) *cobra.Command {

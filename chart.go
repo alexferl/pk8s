@@ -1,4 +1,4 @@
-package pk8s
+package main
 
 import (
 	"crypto/sha256"
