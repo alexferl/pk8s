@@ -13,23 +13,36 @@ type WebServiceParams struct {
 func NewWebService(stack *pk8s.Stack, name string, params WebServiceParams) *pk8s.Chart {
 	chart := pk8s.NewChart(stack, name, &params.ChartParams)
 
+	// You can also pass labels via pk8s.ChartParams and they will be
+	// automatically added to the metadata of all resources.
+	// See examples/chart_params.
+	labels := map[string]string{
+		"app": name,
+	}
+
 	service := &k8s.ServiceV1{
+		Metadata: &k8s.ObjectMetaV1{
+			Labels: &labels,
+		},
 		Spec: &k8s.ServiceSpecV1{
 			Ports:    []k8s.ServicePortV1{{Port: 80, TargetPort: k8s.String("http")}},
-			Selector: params.ChartParams.Labels,
+			Selector: &labels,
 			Type:     k8s.String("LoadBalancer"),
 		},
 	}
 
 	deployment := &k8s.DeploymentV1{
+		Metadata: &k8s.ObjectMetaV1{
+			Labels: &labels,
+		},
 		Spec: &k8s.DeploymentSpecV1{
 			Replicas: k8s.Int32(params.Replicas),
 			Selector: k8s.LabelSelectorV1{
-				MatchLabels: params.ChartParams.Labels,
+				MatchLabels: &labels,
 			},
 			Template: k8s.PodTemplateSpecV1{
 				Metadata: &k8s.ObjectMetaV1{
-					Labels: params.ChartParams.Labels,
+					Labels: &labels,
 				},
 				Spec: &k8s.PodSpecV1{
 					Containers: []k8s.ContainerV1{
@@ -59,14 +72,7 @@ func main() {
 	app := pk8s.New()
 	stack := pk8s.NewStack(app, "dev")
 
-	name := "hello"
-	labels := map[string]string{
-		"app": name,
-	}
-	NewWebService(stack, name, WebServiceParams{
-		ChartParams: pk8s.ChartParams{
-			Labels: &labels,
-		},
+	NewWebService(stack, "hello", WebServiceParams{
 		Replicas: 2,
 	})
 
