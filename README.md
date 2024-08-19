@@ -1,10 +1,20 @@
 # pk8s
-pk8s (programmable kubernetes)
+pk8s (Programmable Kubernetes) is a software development framework designed to facilitate the creation of Kubernetes manifests.
+It empowers developers to define, manage, and reuse Kubernetes manifests programmatically, enhancing efficiency and maintainability.
 
-## CLI
+## Concepts
+
+pk8s applications are developed using Go, providing a powerful and flexible framework for managing Kubernetes resources programmatically.
+
+At the core of a pk8s project is the `App`, which serves as the foundational element.
+Within an `App`, users have the flexibility to define multiple `Stack`, representing various environments, clusters, or teams, tailored to their specific needs.
+Each `Stack` can further encapsulate multiple `Chart`, which are organized collections of Kubernetes resources such as `Deployment`, `Service`, `Ingress`, `ReplicaSet`, and more.
+
+### Using
+### CLI
 The easiest way to get started is using the CLI.
 
-### Quickstart
+#### Quickstart
 Install:
 ```shell
 go install github.com/alexferl/pk8s/pk8s@latest
@@ -55,10 +65,10 @@ metadata:
 
 You can now edit `main.go` and add more stacks and charts and repeat the export process to generate new manifests.
 
-## Code
+### Code
 If you can't or don't want to use the CLI, you can also directly use the library.
 
-### Quickstart
+#### Quickstart
 Install:
 ```shell
 go get github.com/alexferl/pk8s
