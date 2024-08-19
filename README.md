@@ -4,6 +4,7 @@ pk8s (programmable kubernetes)
 ## CLI
 
 ### Quickstart
+Init:
 ```shell
 pk8s init infra
 ```
@@ -13,11 +14,37 @@ Output:
 
   Your pk8s Go project is ready! 🚀✨
 
-    📦 pk8s export  Export Kubernetes manifests to infra
+    📦 pk8s export  Export Kubernetes manifests to dist/
 
   Deploy:
-    🛠️ kubectl apply -f infra
+    🛠️ kubectl apply -f dist/
 
+```
+
+Change directory:
+```shell
+cd infra
+```
+
+Export:
+```shell
+pk8s export
+```
+
+Output:
+```
+Generated Kubernetes manifests:
+  dev:
+    - dist/dev/hello.yaml
+```
+
+And if you check the content of `dist/dev/hello.yaml`:
+```
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-24cf642e
 ```
 
 ## Code
@@ -74,13 +101,4 @@ Output:
 Generated Kubernetes manifests:
   dev:
     - dist/dev/hello.yaml
-```
-
-And if you check the content of `dist/dev/hello.yaml`:
-```
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: hello-24cf642e
 ```
