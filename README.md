@@ -1,4 +1,7 @@
 # pk8s
+
+**!IN DEVELOPMENT!**
+
 pk8s (Programmable Kubernetes) is a software development framework designed to facilitate the creation of Kubernetes manifests.
 It empowers developers to define, manage, and reuse Kubernetes manifests programmatically, enhancing efficiency and maintainability.
 
