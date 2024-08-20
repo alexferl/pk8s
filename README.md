@@ -28,11 +28,6 @@ Init:
 pk8s init infra
 ```
 
-Change directory:
-```shell
-cd infra
-```
-
 Output:
 ```
 
