@@ -1,3 +1,5 @@
+// Code generated; DO NOT EDIT.
+
 package k8s
 
 import (
@@ -6,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestSetApiVersionAndKind(t *testing.T) {
+func TestSetAPIVersionAndKind(t *testing.T) {
 	tests := []struct {
 		name       string
 		input      any
@@ -122,6 +124,12 @@ func TestSetApiVersionAndKind(t *testing.T) {
 			wantKind:   "Deployment",
 		},
 		{
+			name:       "DeviceClassV1alpha3",
+			input:      &DeviceClassV1alpha3{},
+			wantApiVer: "resource.k8s.io/v1alpha3",
+			wantKind:   "DeviceClass",
+		},
+		{
 			name:       "EndpointSliceV1",
 			input:      &EndpointSliceV1{},
 			wantApiVer: "discovery.k8s.io/v1",
@@ -170,9 +178,9 @@ func TestSetApiVersionAndKind(t *testing.T) {
 			wantKind:   "HorizontalPodAutoscaler",
 		},
 		{
-			name:       "IPAddressV1alpha1",
-			input:      &IPAddressV1alpha1{},
-			wantApiVer: "networking.k8s.io/v1alpha1",
+			name:       "IPAddressV1beta1",
+			input:      &IPAddressV1beta1{},
+			wantApiVer: "networking.k8s.io/v1beta1",
 			wantKind:   "IPAddress",
 		},
 		{
@@ -192,6 +200,12 @@ func TestSetApiVersionAndKind(t *testing.T) {
 			input:      &JobV1{},
 			wantApiVer: "batch/v1",
 			wantKind:   "Job",
+		},
+		{
+			name:       "LeaseCandidateV1alpha1",
+			input:      &LeaseCandidateV1alpha1{},
+			wantApiVer: "coordination.k8s.io/v1alpha1",
+			wantKind:   "LeaseCandidate",
 		},
 		{
 			name:       "LeaseV1",
@@ -254,9 +268,9 @@ func TestSetApiVersionAndKind(t *testing.T) {
 			wantKind:   "PodDisruptionBudget",
 		},
 		{
-			name:       "PodSchedulingContextV1alpha2",
-			input:      &PodSchedulingContextV1alpha2{},
-			wantApiVer: "resource.k8s.io/v1alpha2",
+			name:       "PodSchedulingContextV1alpha3",
+			input:      &PodSchedulingContextV1alpha3{},
+			wantApiVer: "resource.k8s.io/v1alpha3",
 			wantKind:   "PodSchedulingContext",
 		},
 		{
@@ -302,34 +316,16 @@ func TestSetApiVersionAndKind(t *testing.T) {
 			wantKind:   "ReplicationController",
 		},
 		{
-			name:       "ResourceClaimParametersV1alpha2",
-			input:      &ResourceClaimParametersV1alpha2{},
-			wantApiVer: "resource.k8s.io/v1alpha2",
-			wantKind:   "ResourceClaimParameters",
-		},
-		{
-			name:       "ResourceClaimTemplateV1alpha2",
-			input:      &ResourceClaimTemplateV1alpha2{},
-			wantApiVer: "resource.k8s.io/v1alpha2",
+			name:       "ResourceClaimTemplateV1alpha3",
+			input:      &ResourceClaimTemplateV1alpha3{},
+			wantApiVer: "resource.k8s.io/v1alpha3",
 			wantKind:   "ResourceClaimTemplate",
 		},
 		{
-			name:       "ResourceClaimV1alpha2",
-			input:      &ResourceClaimV1alpha2{},
-			wantApiVer: "resource.k8s.io/v1alpha2",
+			name:       "ResourceClaimV1alpha3",
+			input:      &ResourceClaimV1alpha3{},
+			wantApiVer: "resource.k8s.io/v1alpha3",
 			wantKind:   "ResourceClaim",
-		},
-		{
-			name:       "ResourceClassParametersV1alpha2",
-			input:      &ResourceClassParametersV1alpha2{},
-			wantApiVer: "resource.k8s.io/v1alpha2",
-			wantKind:   "ResourceClassParameters",
-		},
-		{
-			name:       "ResourceClassV1alpha2",
-			input:      &ResourceClassV1alpha2{},
-			wantApiVer: "resource.k8s.io/v1alpha2",
-			wantKind:   "ResourceClass",
 		},
 		{
 			name:       "ResourceQuotaV1",
@@ -338,9 +334,9 @@ func TestSetApiVersionAndKind(t *testing.T) {
 			wantKind:   "ResourceQuota",
 		},
 		{
-			name:       "ResourceSliceV1alpha2",
-			input:      &ResourceSliceV1alpha2{},
-			wantApiVer: "resource.k8s.io/v1alpha2",
+			name:       "ResourceSliceV1alpha3",
+			input:      &ResourceSliceV1alpha3{},
+			wantApiVer: "resource.k8s.io/v1alpha3",
 			wantKind:   "ResourceSlice",
 		},
 		{
@@ -410,9 +406,9 @@ func TestSetApiVersionAndKind(t *testing.T) {
 			wantKind:   "ServiceAccount",
 		},
 		{
-			name:       "ServiceCIDRV1alpha1",
-			input:      &ServiceCIDRV1alpha1{},
-			wantApiVer: "networking.k8s.io/v1alpha1",
+			name:       "ServiceCIDRV1beta1",
+			input:      &ServiceCIDRV1beta1{},
+			wantApiVer: "networking.k8s.io/v1beta1",
 			wantKind:   "ServiceCIDR",
 		},
 		{
@@ -517,264 +513,270 @@ func TestSetApiVersionAndKind(t *testing.T) {
 			wantApiVer: "storage.k8s.io/v1alpha1",
 			wantKind:   "VolumeAttributesClass",
 		},
+		{
+			name:       "VolumeAttributesClassV1beta1",
+			input:      &VolumeAttributesClassV1beta1{},
+			wantApiVer: "storage.k8s.io/v1beta1",
+			wantKind:   "VolumeAttributesClass",
+		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			SetApiVersionAndKind(tt.input)
+			SetAPIVersionAndKind(tt.input)
 
 			switch obj := tt.input.(type) {
 			case *APIGroupV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *APIServiceV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *APIVersionsV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *BindingV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *CSIDriverV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *CSINodeV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *CSIStorageCapacityV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *CertificateSigningRequestV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *ClusterRoleBindingV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *ClusterRoleV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *ClusterTrustBundleV1alpha1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *ComponentStatusV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *ConfigMapV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *ControllerRevisionV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *CronJobV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *CustomResourceDefinitionV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *DaemonSetV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *DeploymentV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
+				assert.Equal(t, tt.wantKind, *obj.Kind)
+			case *DeviceClassV1alpha3:
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *EndpointSliceV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *EndpointsV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *EventV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *EvictionV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *FlowSchemaV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *FlowSchemaV1beta3:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *HorizontalPodAutoscalerV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *HorizontalPodAutoscalerV2:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
-			case *IPAddressV1alpha1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+			case *IPAddressV1beta1:
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *IngressClassV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *IngressV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *JobV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
+				assert.Equal(t, tt.wantKind, *obj.Kind)
+			case *LeaseCandidateV1alpha1:
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *LeaseV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *LimitRangeV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *LocalSubjectAccessReviewV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *MutatingWebhookConfigurationV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *NamespaceV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *NetworkPolicyV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *NodeV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *PersistentVolumeClaimV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *PersistentVolumeV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *PodDisruptionBudgetV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
-			case *PodSchedulingContextV1alpha2:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+			case *PodSchedulingContextV1alpha3:
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *PodTemplateV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *PodV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *PriorityClassV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *PriorityLevelConfigurationV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *PriorityLevelConfigurationV1beta3:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *ReplicaSetV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *ReplicationControllerV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
-			case *ResourceClaimParametersV1alpha2:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+			case *ResourceClaimTemplateV1alpha3:
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
-			case *ResourceClaimTemplateV1alpha2:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
-				assert.Equal(t, tt.wantKind, *obj.Kind)
-			case *ResourceClaimV1alpha2:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
-				assert.Equal(t, tt.wantKind, *obj.Kind)
-			case *ResourceClassParametersV1alpha2:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
-				assert.Equal(t, tt.wantKind, *obj.Kind)
-			case *ResourceClassV1alpha2:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+			case *ResourceClaimV1alpha3:
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *ResourceQuotaV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
-			case *ResourceSliceV1alpha2:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+			case *ResourceSliceV1alpha3:
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *RoleBindingV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *RoleV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *RuntimeClassV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *ScaleV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *SecretV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *SelfSubjectAccessReviewV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *SelfSubjectReviewV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *SelfSubjectReviewV1alpha1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *SelfSubjectReviewV1beta1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *SelfSubjectRulesReviewV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *ServiceAccountV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
-			case *ServiceCIDRV1alpha1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+			case *ServiceCIDRV1beta1:
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *ServiceV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *StatefulSetV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *StatusV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *StorageClassV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *StorageVersionMigrationV1alpha1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *StorageVersionV1alpha1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *SubjectAccessReviewV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *TokenReviewV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *ValidatingAdmissionPolicyBindingV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *ValidatingAdmissionPolicyBindingV1alpha1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *ValidatingAdmissionPolicyBindingV1beta1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *ValidatingAdmissionPolicyV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *ValidatingAdmissionPolicyV1alpha1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *ValidatingAdmissionPolicyV1beta1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *ValidatingWebhookConfigurationV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *VolumeAttachmentV1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			case *VolumeAttributesClassV1alpha1:
-				assert.Equal(t, tt.wantApiVer, *obj.ApiVersion)
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
+				assert.Equal(t, tt.wantKind, *obj.Kind)
+			case *VolumeAttributesClassV1beta1:
+				assert.Equal(t, tt.wantApiVer, *obj.APIVersion)
 				assert.Equal(t, tt.wantKind, *obj.Kind)
 			}
 		})

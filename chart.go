@@ -52,7 +52,7 @@ func (c *Chart) Append(objs ...any) {
 	for _, i := range objs {
 		obj := APIObject{v: i}
 
-		k8s.SetApiVersionAndKind(i)
+		k8s.SetAPIVersionAndKind(i)
 
 		b, err := obj.JSON()
 		if err != nil {

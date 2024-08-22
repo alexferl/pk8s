@@ -1,0 +1,11 @@
+// Code generated; DO NOT EDIT.
+
+package k8s
+
+// ResourceClaimSchedulingStatusV1alpha3 ResourceClaimSchedulingStatus contains information about one particular ResourceClaim with "WaitForFirstConsumer" allocation mode.
+type ResourceClaimSchedulingStatusV1alpha3 struct {
+	// Name matches the pod.spec.resourceClaims[*].Name field.
+	Name string `json:"name"`
+	// UnsuitableNodes lists nodes that the ResourceClaim cannot be allocated for.  The size of this field is limited to 128, the same as for PodSchedulingSpec.PotentialNodes. This may get increased in the future, but not reduced.
+	UnsuitableNodes []string `json:"unsuitableNodes,omitempty"`
+}
