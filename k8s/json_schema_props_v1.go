@@ -13,10 +13,11 @@ type JSONSchemaPropsV1 struct {
 	AllOf                []JSONSchemaPropsV1    `json:"allOf,omitempty"`
 	AnyOf                []JSONSchemaPropsV1    `json:"anyOf,omitempty"`
 	// JSON represents any valid JSON value. These types are supported: bool, int64, float64, string, []interface{}, map[string]interface{} and nil.
-	Default      map[string]interface{}        `json:"default,omitempty"`
-	Definitions  map[string]*JSONSchemaPropsV1 `json:"definitions,omitempty"`
-	Dependencies *map[string]string            `json:"dependencies,omitempty"`
-	Description  *string                       `json:"description,omitempty"`
+	Default      map[string]interface{}       `json:"default,omitempty"`
+	Definitions  map[string]JSONSchemaPropsV1 `json:"definitions,omitempty"`
+	Dependencies *map[string]interface{}      `json:"dependencies,omitempty"`
+	Description  *string                      `json:"description,omitempty"`
+	Enum         []map[string]interface{}     `json:"enum,omitempty"`
 	// JSON represents any valid JSON value. These types are supported: bool, int64, float64, string, []interface{}, map[string]interface{} and nil.
 	Example          map[string]interface{} `json:"example,omitempty"`
 	ExclusiveMaximum *bool                  `json:"exclusiveMaximum,omitempty"`
@@ -38,16 +39,16 @@ type JSONSchemaPropsV1 struct {
 	Minimum       *float64               `json:"minimum,omitempty"`
 	MultipleOf    *float64               `json:"multipleOf,omitempty"`
 	// JSONSchemaProps is a JSON-Schema following Specification Draft 4 (http://json-schema.org/).
-	Not               *JSONSchemaPropsV1            `json:"not,omitempty"`
-	Nullable          *bool                         `json:"nullable,omitempty"`
-	OneOf             []JSONSchemaPropsV1           `json:"oneOf,omitempty"`
-	Pattern           *string                       `json:"pattern,omitempty"`
-	PatternProperties map[string]*JSONSchemaPropsV1 `json:"patternProperties,omitempty"`
-	Properties        map[string]*JSONSchemaPropsV1 `json:"properties,omitempty"`
-	Required          []string                      `json:"required,omitempty"`
-	Title             *string                       `json:"title,omitempty"`
-	Type              *string                       `json:"type,omitempty"`
-	UniqueItems       *bool                         `json:"uniqueItems,omitempty"`
+	Not               *JSONSchemaPropsV1           `json:"not,omitempty"`
+	Nullable          *bool                        `json:"nullable,omitempty"`
+	OneOf             []JSONSchemaPropsV1          `json:"oneOf,omitempty"`
+	Pattern           *string                      `json:"pattern,omitempty"`
+	PatternProperties map[string]JSONSchemaPropsV1 `json:"patternProperties,omitempty"`
+	Properties        map[string]JSONSchemaPropsV1 `json:"properties,omitempty"`
+	Required          []string                     `json:"required,omitempty"`
+	Title             *string                      `json:"title,omitempty"`
+	Type              *string                      `json:"type,omitempty"`
+	UniqueItems       *bool                        `json:"uniqueItems,omitempty"`
 	// x-kubernetes-embedded-resource defines that the value is an embedded Kubernetes runtime.Object, with TypeMeta and ObjectMeta. The type must be object. It is allowed to further restrict the embedded object. kind, apiVersion and metadata are validated automatically. x-kubernetes-preserve-unknown-fields is allowed to be true, but does not have to be if the object is fully specified (up to kind, apiVersion, metadata).
 	XKubernetesEmbeddedResource *bool `json:"x-kubernetes-embedded-resource,omitempty"`
 	// x-kubernetes-int-or-string specifies that this value is either an integer or a string. If this is true, an empty type is allowed and type as child of anyOf is permitted if following one of the following patterns:  1) anyOf:    - type: integer    - type: string 2) allOf:    - anyOf:      - type: integer      - type: string    - ... zero or more

@@ -5,7 +5,7 @@ package k8s
 // SubjectAccessReviewSpecV1 SubjectAccessReviewSpec is a description of the access request.  Exactly one of ResourceAuthorizationAttributes and NonResourceAuthorizationAttributes must be set
 type SubjectAccessReviewSpecV1 struct {
 	// Extra corresponds to the user.Info.GetExtra() method from the authenticator.  Since that is input to the authorizer it needs a reflection here.
-	Extra *map[string]string `json:"extra,omitempty"`
+	Extra *map[string][]string `json:"extra,omitempty"`
 	// Groups is the groups you're testing for.
 	Groups []string `json:"groups,omitempty"`
 	// NonResourceAttributes includes the authorization attributes available for non-resource requests to the Authorizer interface

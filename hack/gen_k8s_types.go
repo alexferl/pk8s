@@ -208,30 +208,29 @@ func (p *Processor) process(def *highbase.SchemaProxy) {
 	requiredField := def.Schema().Required
 	for el := def.Schema().Properties.First(); el != nil; el = el.Next() {
 		schema := el.Value().Schema()
+		key := el.Key()
 
-		tag := fmt.Sprintf("`json:\"%s", el.Key())
-		if !slices.Contains(requiredField, el.Key()) {
+		tag := fmt.Sprintf("`json:\"%s", key)
+		if !slices.Contains(requiredField, key) {
 			tag += ",omitempty\"`"
 		} else {
 			tag += "\"`"
 		}
 
 		var typ string
-		if !slices.Contains(requiredField, el.Key()) {
+		if !slices.Contains(requiredField, key) {
 			typ += "*"
 		}
 
-		key := el.Key()
-
 		if !el.Value().IsReference() {
 			if isJSONSchemaProps {
-				switch el.Key() {
+				switch key {
 				case "enum":
 					typ = "[]map[string]interface{}"
 				case "allOf", "anyOf", "oneOf":
-					typ = "[]*JSONSchemaPropsV1"
+					typ = "[]JSONSchemaPropsV1"
 				case "properties", "patternProperties", "definitions":
-					typ = "map[string]*JSONSchemaPropsV1"
+					typ = "map[string]JSONSchemaPropsV1"
 				default:
 					if strings.HasPrefix(key, "$") {
 						key = strings.TrimPrefix(key, "$")
@@ -241,16 +240,12 @@ func (p *Processor) process(def *highbase.SchemaProxy) {
 			if schema.Format == "" {
 				switch schema.Type[0] {
 				case "array":
-					if isJSONSchemaProps && key == "enum" {
-						continue
-					}
-
 					if schema.Items.A.Schema().Format != "" {
 						typ = fmt.Sprintf("[]%s", schema.Items.A.Schema().Format)
 					} else if len(schema.Items.A.Schema().Type) > 0 && schema.Items.A.Schema().Type[0] != "" {
 						typ = fmt.Sprintf("[]%s", schema.Items.A.Schema().Type[0])
 					}
-					if schema.Items.A.IsReference() {
+					if schema.Items.A.IsReference() && key != "enum" {
 						ref := strings.TrimPrefix(schema.Items.A.GetReference(), "#/definitions/")
 						if ref == "io.k8s.apimachinery.pkg.util.intstr.IntOrString" {
 							typ += "string"
@@ -262,8 +257,28 @@ func (p *Processor) process(def *highbase.SchemaProxy) {
 				case "boolean":
 					typ += "bool"
 				case "object":
-					if typ != "map[string]*JSONSchemaPropsV1" {
-						typ += "map[string]string"
+					if !strings.HasSuffix(typ, "JSONSchemaPropsV1") {
+						typ += "map[string]"
+					}
+
+					if schema.AdditionalProperties.IsA() {
+						additionalProperties := schema.AdditionalProperties.A.Schema()
+						if len(additionalProperties.Type) > 0 {
+							switch additionalProperties.Type[0] {
+							case "array":
+								typ += fmt.Sprintf("[]%s", additionalProperties.Items.A.Schema().Type[0])
+							case "string":
+								typ += "string"
+							case "object":
+								if !strings.HasSuffix(typ, "JSONSchemaPropsV1") {
+									typ += "map[string]interface{}"
+								}
+							default:
+								log.Fatalf("Unhandled additionalProperties type %s %s\n", key, additionalProperties.Type[0])
+							}
+						} else {
+							typ += "interface{}"
+						}
 					}
 				default:
 					typ += schema.Type[0]
@@ -271,7 +286,7 @@ func (p *Processor) process(def *highbase.SchemaProxy) {
 			} else {
 				switch schema.Format {
 				case "byte":
-					typ += "string"
+					typ = "[]byte"
 				case "double":
 					typ += "float64"
 				default:
@@ -280,8 +295,8 @@ func (p *Processor) process(def *highbase.SchemaProxy) {
 			}
 		} else {
 			if isJSONSchemaProps {
-				switch el.Key() {
-				case "additionalItems", "additionalProperties", "default", "example", "items":
+				switch key {
+				case "additionalItems", "additionalProperties", "default", "enum", "example", "items":
 					typ = "map[string]interface{}"
 				case "externalDocs", "not":
 					ref := strings.TrimPrefix(el.Value().GetReference(), "#/definitions/")
@@ -347,9 +362,9 @@ func capitalizeVersion(version string) string {
 func runGoFmt(dir string) error {
 	cmd := exec.Command("go", "fmt", "./...")
 	cmd.Dir = dir
-	output, err := cmd.CombinedOutput()
+	_, err := cmd.CombinedOutput()
 	if err != nil {
-		return fmt.Errorf("go fmt failed: %v\n%s", err, output)
+		return fmt.Errorf("go fmt failed: %v", err)
 	}
 	return nil
 }
