@@ -270,6 +270,8 @@ func (p *Processor) process(def *highbase.SchemaProxy) {
 				}
 			} else {
 				switch schema.Format {
+				case "byte":
+					typ += "string"
 				case "double":
 					typ += "float64"
 				default:
