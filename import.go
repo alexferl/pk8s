@@ -91,7 +91,7 @@ func (i *importer) Read(path string) ([]byte, error) {
 	var data []byte
 	var err error
 
-	if path == "-" || path == "" {
+	if path == "" || path == "-" {
 		log.Debug().Msg("importer detected stdin path")
 
 		data, err = io.ReadAll(os.Stdin)

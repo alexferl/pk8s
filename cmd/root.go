@@ -12,6 +12,7 @@ var rootCmd = &cobra.Command{
 }
 
 func init() {
+	importCmd := importCmd()
 	rootCmd.AddCommand(initCmd(&CommandExecutor{}))
 	rootCmd.AddCommand(importCmd)
 	rootCmd.AddCommand(exportCmd())
