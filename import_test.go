@@ -8,22 +8,22 @@ import (
 
 func TestImporterRead(t *testing.T) {
 	content := []byte("test content")
-	tmpfile, err := os.CreateTemp("", "example")
+	tmpFile, err := os.CreateTemp("", "example")
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer os.Remove(tmpfile.Name())
+	defer os.Remove(tmpFile.Name())
 
-	if _, err := tmpfile.Write(content); err != nil {
+	if _, err := tmpFile.Write(content); err != nil {
 		t.Fatal(err)
 	}
-	if err := tmpfile.Close(); err != nil {
+	if err := tmpFile.Close(); err != nil {
 		t.Fatal(err)
 	}
 
 	importer := NewImporter(&ImporterConfig{})
 
-	data, err := importer.Read(tmpfile.Name())
+	data, err := importer.Read(tmpFile.Name())
 	if err != nil {
 		t.Fatalf("Failed to read file: %v", err)
 	}

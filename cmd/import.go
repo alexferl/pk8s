@@ -16,10 +16,10 @@ func example() string {
 	w := tabwriter.NewWriter(&sb, 0, 8, 1, '\t', 0)
 	fmt.Fprintln(w, "pk8s import cert-manager.crds.yaml\tImports CRDs from a file")
 	fmt.Fprintln(w, "pk8s import my_name:=cert-manager.crds.yaml\tImports CRDs from a file using a custom package name")
-	fmt.Fprintln(w, "kubectl get crds audits.warden.gke.io -o yaml | go run ./pk8s import\tImports CRDs from a Kubernetes cluster")
-	fmt.Fprintln(w, "kubectl get crds audits.warden.gke.io -o yaml | go run ./pk8s import my_name:=\tImports CRDs from a Kubernetes cluster")
 	fmt.Fprintln(w, "pk8s import https://github.com/cert-manager/cert-manager/releases/download/v1.15.3/cert-manager.crds.yaml\tImports CRDs from an HTTP link")
 	fmt.Fprintln(w, "pk8s import my_name:=https://github.com/cert-manager/cert-manager/releases/download/v1.15.3/cert-manager.crds.yaml\tImports CRDs from an HTTP link with a custom package name")
+	fmt.Fprintln(w, "kubectl get crds managedcertificates.networking.gke.io -o yaml | go run ./pk8s import\tImports CRDs from a Kubernetes cluster")
+	fmt.Fprintln(w, "kubectl get crds managedcertificates.networking.gke.io -o yaml | go run ./pk8s import my_name:=\tImports CRDs from a Kubernetes cluster")
 	w.Flush()
 
 	return sb.String()

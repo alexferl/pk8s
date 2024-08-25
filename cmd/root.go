@@ -17,7 +17,7 @@ func init() {
 	rootCmd.AddCommand(importCmd)
 	rootCmd.AddCommand(exportCmd())
 
-	importCmd.PersistentFlags().Bool("overwrite", false, "overwrite existing custom resource definition files")
+	importCmd.PersistentFlags().Bool("overwrite", false, "overwrite existing CRD files")
 }
 
 func Execute() {
