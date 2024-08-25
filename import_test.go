@@ -158,8 +158,8 @@ func TestGenerateStructs(t *testing.T) {
 		},
 	}
 
-	var buf bytes.Buffer
-	generateStructs(&buf, "TestStruct", prop)
+	var file File
+	generateStructs(&file, "TestStruct", prop)
 
 	expected := `type TestStruct struct {
 	Field1 *string ` + "`json:\"field1,omitempty\"`" + `
@@ -167,7 +167,7 @@ func TestGenerateStructs(t *testing.T) {
 
 `
 
-	if buf.String() != expected {
-		t.Errorf("generateStructs() generated incorrect struct:\n%s\nExpected:\n%s", buf.String(), expected)
+	if file.String() != expected {
+		t.Errorf("generateStructs() generated incorrect struct:\n%s\nExpected:\n%s", file.String(), expected)
 	}
 }

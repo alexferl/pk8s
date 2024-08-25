@@ -37,7 +37,7 @@ dev: check-pre-commit
 version ?=
 
 gen:
-	./hack/gen.sh $(version)
+	go run ./hack/k8s -version $(version)
 
 run:
 	go build -o cli-bin ./cmd/cli && ./cli-bin
@@ -46,13 +46,13 @@ build:
 	go build -o cli-bin ./cmd/cli
 
 test:
-	go test -v $(shell go list ./... | grep -Ev '/hack|/examples')
+	go test -v $(shell go list ./... | grep -Ev '/hack|/examples|/imports')
 
 cover:
-	go test -v -cover $(shell go list ./... | grep -Ev '/hack|/examples')
+	go test -v -cover $(shell go list ./... | grep -Ev '/hack|/examples|/imports')
 
 cover-html:
-	go test -v -coverprofile=coverage.out $(shell go list ./... | grep -Ev '/hack|/examples')
+	go test -v -coverprofile=coverage.out $(shell go list ./... | grep -Ev '/hack|/examples|/imports')
 	go tool cover -html=coverage.out
 
 tidy:
