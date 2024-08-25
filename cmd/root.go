@@ -12,8 +12,11 @@ var rootCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(exportCmd())
 	rootCmd.AddCommand(initCmd(&CommandExecutor{}))
+	rootCmd.AddCommand(importCmd)
+	rootCmd.AddCommand(exportCmd())
+
+	importCmd.PersistentFlags().Bool("overwrite", false, "overwrite existing custom resource definition files")
 }
 
 func Execute() {

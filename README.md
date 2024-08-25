@@ -33,7 +33,8 @@ Output:
 
   Your pk8s Go project is ready! 🚀✨
 
-    📦 pk8s export  Export Kubernetes manifests to dist/
+    📤 pk8s export  Export Kubernetes manifests to dist/
+    📥 pk8s import  Import custom resource definitions to imports/
 
   Deploy:
     🛠️ kubectl apply -f dist/

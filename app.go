@@ -70,7 +70,7 @@ func (a *App) build(writeToFs bool, printManifestList bool) string {
 		fmt.Println("Generated Kubernetes manifests:")
 	}
 	for _, stack := range a.stacks {
-		err := createDirectory(*a.config.OutputPath)
+		err := createDirectory(*a.config.OutputPath, false)
 		if err != nil {
 			log.Fatal().Msgf("failed creating directory: %v", err)
 		}
