@@ -33,7 +33,7 @@ func (s *Stack) build(writeToFs bool) string {
 
 		if writeToFs {
 			path := fmt.Sprintf("%s/%s", *s.app.config.OutputPath, s.Name)
-			err := createDirectory(path)
+			err := createDirectory(path, false)
 			if err != nil {
 				log.Fatal().Msgf("failed creating directory: %v", err)
 			}

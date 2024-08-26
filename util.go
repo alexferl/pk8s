@@ -1,6 +1,7 @@
 package pk8s
 
 import (
+	"fmt"
 	"os"
 
 	"github.com/rs/zerolog/log"
@@ -20,7 +21,7 @@ func removeDirectory(path string) error {
 	return nil
 }
 
-func createDirectory(path string) error {
+func createDirectory(path string, errOnExist bool) error {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		err := os.MkdirAll(path, 0o755)
 		if err != nil {
@@ -30,5 +31,8 @@ func createDirectory(path string) error {
 		return nil
 	}
 	log.Debug().Msgf("directory '%s' already exists", path)
+	if errOnExist {
+		return fmt.Errorf("directory '%s' already exists", path)
+	}
 	return nil
 }

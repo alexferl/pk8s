@@ -257,26 +257,30 @@ func (p *Processor) process(def *highbase.SchemaProxy) {
 }
 
 func (p *Processor) write() {
-	tmpl, err := template.New("structTemplate").Parse(structTemplate)
-	if err != nil {
-		log.Fatalf("failed creating template: %v", err)
-	}
-
 	if err := os.MkdirAll("k8s", 0o755); err != nil {
 		log.Fatalf("failed to create k8s directory: %v", err)
 	}
 
 	for _, file := range p.files {
-		out, err := os.Create(fmt.Sprintf("k8s/%s", file.Name))
-		if err != nil {
-			log.Fatalf("failed creating file: %v", err)
-		}
-		defer out.Close()
+		writeFile(file)
+	}
+}
 
-		err = tmpl.Execute(out, file)
-		if err != nil {
-			log.Fatalf("failed executing template: %v", err)
-		}
+func writeFile(file *File) {
+	out, err := os.Create(fmt.Sprintf("k8s/%s", file.Name))
+	if err != nil {
+		log.Fatalf("failed creating file: %v", err)
+	}
+	defer out.Close()
+
+	tmpl, err := template.New("structTemplate").Parse(structTemplate)
+	if err != nil {
+		log.Fatalf("failed creating template: %v", err)
+	}
+
+	err = tmpl.Execute(out, file)
+	if err != nil {
+		log.Fatalf("failed executing template: %v", err)
 	}
 }
 

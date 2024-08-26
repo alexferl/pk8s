@@ -68,7 +68,6 @@ func main() {
 
 func downloadSwaggerSpec(version string) []byte {
 	url := fmt.Sprintf("https://raw.githubusercontent.com/kubernetes/kubernetes/%s/api/openapi-spec/swagger.json", version)
-
 	resp, err := http.Get(url)
 	if err != nil {
 		log.Fatalf("failed to fetch URL: %v", err)
