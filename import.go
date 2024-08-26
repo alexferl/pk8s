@@ -10,6 +10,7 @@ import (
 	"os/exec"
 	"regexp"
 	"slices"
+	"sort"
 	"strings"
 	"text/template"
 
@@ -19,11 +20,6 @@ import (
 )
 
 type CRD struct {
-	APIVersion string `yaml:"apiVersion"`
-	Kind       string `yaml:"kind"`
-	Metadata   struct {
-		Name string `yaml:"name"`
-	} `yaml:"metadata"`
 	Spec Spec `yaml:"spec"`
 }
 
@@ -34,16 +30,12 @@ type Spec struct {
 }
 
 type Names struct {
-	Kind       string   `yaml:"kind"`
-	ListKind   string   `yaml:"listKind"`
-	Plural     string   `yaml:"plural"`
-	Singular   string   `yaml:"singular"`
-	ShortNames []string `yaml:"shortNames,omitempty"`
-	Categories []string `yaml:"categories,omitempty"`
+	Kind     string `yaml:"kind"`
+	ListKind string `yaml:"listKind"`
+	Singular string `yaml:"singular"`
 }
 
 type Version struct {
-	Name   string `yaml:"name"`
 	Schema struct {
 		OpenAPIV3Schema Property `yaml:"openAPIV3Schema"`
 	} `yaml:"schema"`
@@ -86,10 +78,16 @@ type Importer interface {
 	Import(data []byte) error
 }
 
+type GroupItems struct {
+	Group string
+	Items []string
+}
+
 type importer struct {
-	config *ImporterConfig
-	files  []File
-	name   *string
+	config   *ImporterConfig
+	files    []File
+	name     *string
+	groupMap map[string]*GroupItems
 }
 
 type ImporterConfig struct {
@@ -98,7 +96,8 @@ type ImporterConfig struct {
 
 func NewImporter(config *ImporterConfig) Importer {
 	return &importer{
-		config: config,
+		config:   config,
+		groupMap: make(map[string]*GroupItems),
 	}
 }
 
@@ -158,6 +157,7 @@ func (i *importer) Import(data []byte) error {
 		crds = append(crds, crd)
 	}
 
+	fmt.Println("Importing custom resource definitions, this may take a few moments...")
 	for _, crd := range crds {
 		err := i.importCRD(crd)
 		if err != nil {
@@ -175,13 +175,22 @@ func (i *importer) Import(data []byte) error {
 		return err
 	}
 
+	i.print()
+
 	return nil
 }
 
 func (i *importer) importCRD(crd CRD) error {
 	schema := crd.Spec.Versions[0].Schema.OpenAPIV3Schema
-	group := strcase.ToSnake(crd.Spec.Group)
+	group := crd.Spec.Group
+	groupSnake := strcase.ToSnake(group)
+	singular := crd.Spec.Names.Singular
 	kindPrefix := strcase.ToPascal(crd.Spec.Names.Kind)
+
+	if _, ok := i.groupMap[group]; !ok {
+		i.groupMap[group] = &GroupItems{Group: group}
+	}
+	i.groupMap[group].Items = append(i.groupMap[group].Items, fmt.Sprintf("%s/%s", group, singular))
 
 	name := kindPrefix
 	if i.name != nil {
@@ -189,13 +198,13 @@ func (i *importer) importCRD(crd CRD) error {
 	}
 
 	name = strcase.ToSnake(name)
-	path := fmt.Sprintf("imports/%s", group)
+	path := fmt.Sprintf("imports/%s", groupSnake)
 
 	fileName := fmt.Sprintf("%s/%s.go", path, name)
 	file := File{
 		Dir:     path,
 		Name:    fileName,
-		Package: group,
+		Package: groupSnake,
 	}
 
 	generateStructs(&file, kindPrefix, schema)
@@ -245,6 +254,27 @@ func (i *importer) write() error {
 	}
 
 	return nil
+}
+
+func (i *importer) print() {
+	var groups []GroupItems
+	for _, g := range i.groupMap {
+		groups = append(groups, *g)
+	}
+
+	sort.Slice(groups, func(i, j int) bool {
+		return groups[i].Group < groups[j].Group
+	})
+
+	for _, g := range groups {
+		fmt.Println(g.Group)
+
+		sort.Strings(g.Items)
+
+		for _, item := range g.Items {
+			fmt.Printf("  %s\n", item)
+		}
+	}
 }
 
 func writeFile(file File) error {

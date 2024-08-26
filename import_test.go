@@ -1,42 +1,117 @@
 package pk8s
 
 import (
-	"bytes"
+	"io"
+	"net/http"
 	"os"
+	"strings"
 	"testing"
 )
 
 func TestImporterRead(t *testing.T) {
-	content := []byte("test content")
-	tmpFile, err := os.CreateTemp("", "example")
-	if err != nil {
-		t.Fatal(err)
+	tests := []struct {
+		name        string
+		path        string
+		setupMock   func()
+		cleanupMock func()
+		wantData    string
+		wantErr     bool
+	}{
+		{
+			name: "Custom name",
+			path: "custom:=testfile.yaml",
+			setupMock: func() {
+				os.WriteFile("testfile.yaml", []byte("test data"), 0o644)
+			},
+			cleanupMock: func() {
+				os.Remove("testfile.yaml")
+			},
+			wantData: "test data",
+			wantErr:  false,
+		},
+		{
+			name: "Stdin input",
+			path: "-",
+			setupMock: func() {
+				oldStdin := os.Stdin
+				r, w, _ := os.Pipe()
+				os.Stdin = r
+				go func() {
+					w.Write([]byte("stdin data"))
+					w.Close()
+				}()
+				t.Cleanup(func() { os.Stdin = oldStdin })
+			},
+			wantData: "stdin data",
+			wantErr:  false,
+		},
+		{
+			name: "HTTP link",
+			path: "http://example.com/data",
+			setupMock: func() {
+				oldClient := http.DefaultClient
+				http.DefaultClient = &http.Client{
+					Transport: &mockTransport{
+						response: &http.Response{
+							StatusCode: 200,
+							Body:       io.NopCloser(strings.NewReader("http data")),
+						},
+					},
+				}
+				t.Cleanup(func() { http.DefaultClient = oldClient })
+			},
+			wantData: "http data",
+			wantErr:  false,
+		},
+		{
+			name: "File path",
+			path: "testfile.yaml",
+			setupMock: func() {
+				os.WriteFile("testfile.yaml", []byte("file data"), 0o644)
+			},
+			cleanupMock: func() {
+				os.Remove("testfile.yaml")
+			},
+			wantData: "file data",
+			wantErr:  false,
+		},
+		{
+			name:    "Non-existent file",
+			path:    "nonexistent.yaml",
+			wantErr: true,
+		},
 	}
-	defer os.Remove(tmpFile.Name())
 
-	if _, err := tmpFile.Write(content); err != nil {
-		t.Fatal(err)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if tt.setupMock != nil {
+				tt.setupMock()
+			}
+			if tt.cleanupMock != nil {
+				defer tt.cleanupMock()
+			}
+
+			i := &importer{}
+			gotData, err := i.Read(tt.path)
+
+			if (err != nil) != tt.wantErr {
+				t.Errorf("importer.Read() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if string(gotData) != tt.wantData {
+				t.Errorf("importer.Read() = %v, want %v", string(gotData), tt.wantData)
+			}
+		})
 	}
-	if err := tmpFile.Close(); err != nil {
-		t.Fatal(err)
-	}
+}
 
-	importer := NewImporter(&ImporterConfig{})
+// mockTransport is a mock for http.RoundTripper
+type mockTransport struct {
+	response *http.Response
+}
 
-	data, err := importer.Read(tmpFile.Name())
-	if err != nil {
-		t.Fatalf("Failed to read file: %v", err)
-	}
-	if !bytes.Equal(data, content) {
-		t.Errorf("Read incorrect content: got %q, want %q", data, content)
-	}
-
-	// TODO:
-	// Test reading from stdin
-	// ...
-
-	// Test reading from HTTP
-	// ...
+func (m *mockTransport) RoundTrip(*http.Request) (*http.Response, error) {
+	return m.response, nil
 }
 
 func TestImporterImport(t *testing.T) {
