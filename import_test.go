@@ -143,9 +143,7 @@ spec:
                 type: integer
 `
 
-	importer := &importer{
-		config: &ImporterConfig{Overwrite: true},
-	}
+	importer := NewImporter(&ImporterConfig{Overwrite: true})
 
 	err := importer.Import([]byte(crdYAML))
 	if err != nil {
