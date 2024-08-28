@@ -28,3 +28,4 @@ cli-bin
 
 dist
 imports
+!examples/*/imports

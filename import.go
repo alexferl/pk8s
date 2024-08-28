@@ -183,7 +183,6 @@ func (i *importer) Import(data []byte) error {
 func (i *importer) importCRD(crd CRD) error {
 	schema := crd.Spec.Versions[0].Schema.OpenAPIV3Schema
 	group := crd.Spec.Group
-	groupSnake := strcase.ToSnake(group)
 	singular := crd.Spec.Names.Singular
 	kindPrefix := strcase.ToPascal(crd.Spec.Names.Kind)
 
@@ -192,15 +191,14 @@ func (i *importer) importCRD(crd CRD) error {
 	}
 	i.groupMap[group].Items = append(i.groupMap[group].Items, fmt.Sprintf("%s/%s", group, singular))
 
-	name := kindPrefix
 	if i.name != nil {
-		name = *i.name
+		group = fmt.Sprintf("%s_%s", *i.name, group)
 	}
+	groupSnake := strcase.ToSnake(group)
 
-	name = strcase.ToSnake(name)
 	path := fmt.Sprintf("imports/%s", groupSnake)
 
-	fileName := fmt.Sprintf("%s/%s.go", path, name)
+	fileName := fmt.Sprintf("%s/%s.go", path, strcase.ToSnake(kindPrefix))
 	file := File{
 		Dir:     path,
 		Name:    fileName,
