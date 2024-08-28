@@ -5,13 +5,13 @@ This example demonstrate how to import custom resource definitions (CRDs) from a
 ## Using
 CLI:
 ```shell
-cd examples/import
+cd examples/import_from_file
 pk8s import managedcertificates-crd.yaml
 ```
 
 Using a custom package name:
 ```shell
-cd examples/import
+cd examples/import_from_file
 pk8s import my_name:=managedcertificates-crd.yaml
 ```
 

@@ -5,13 +5,13 @@ This example demonstrate how to import custom resource definitions (CRDs) from a
 ## Using
 CLI:
 ```shell
-cd examples/import
+cd examples/import_from_k8s
 kubectl get crds managedcertificates.networking.gke.io -o yaml | go run ./pk8s import
 ```
 
 Custom package name:
 ```shell
-cd examples/import
+cd examples/import_from_k8s
 kubectl get crds managedcertificates.networking.gke.io -o yaml | go run ./pk8s import my_name:=
 ```
 
